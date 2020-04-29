@@ -1,5 +1,5 @@
 class Person :
-        def __init__ (self,name,city,proffesion) :
+        def __init__ (self,name,city,profession) :
             self.name = name
             self.city = city
-            self.proffesion = proffesion
+            self.profession = profession
