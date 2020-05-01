@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<!--This is a comment. Comments are not displayed in the browser-->
+
+<!--
+<h1> Hello </h1>
+
+<script>
+alert('this is a popup')
+console.log('this is a console message that is being printed')
+</script>
+
+Hello
+
+{% for number in NUMBERS %}
+
+    <h1>{{ number }}</h1>
+
+    {% endfor %}
+
+My name is {{ PERSON['name'] }} and I work as a {{ PERSON['profession'] }}
+
+{{ WORDS[0] }}
+
+
+-->
+
+Hello
+
+{% for number in NUMBERS %}
+
+    <h1>{{ number }}</h1>
+
+    {% endfor %}
+
+My name is {{ PERSON['name'] }} and I work as a {{ PERSON['profession'] }}
+
+{{ WORDS[0] }}
+
+{% endblock %}
