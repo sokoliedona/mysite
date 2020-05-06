@@ -3,46 +3,56 @@
 {% block content %}
 
 <form method = "POST">
-    <div class="row">
-        <div class="input-field col s6">
-          <input name='task_name' placeholder="Placeholder" id="task_name" type="text">
-          <label for="task_name">Task Name</label>
-        </div>
-    </div>
 
-    <div class="row">
-        <div class="input-field col s6">
-          <input name='duration' placeholder="Placeholder" id="duration" type="number">
-          <label for="duration">Duration</label>
-        </div>
-    </div>
+        <div class="row">
 
-    <div class="row">
-        <div class="input-field col s6">
-          <input name='location' placeholder="Placeholder" id="location" type="text">
-          <label for="first_name">Location</label>
-        </div>
-    </div>
+            <div class="input-field col s12">
+                <i class="material-icons prefix">description</i>
+                <input name='task_name' placeholder="Placeholder" id="task_name" type="text">
+                <label for="task_name">Task Name</label>
+            </div>
 
-    <button type="submit">Submit</button>
+        </div>
+
+        <div class="row">
+
+            <div class="input-field col s12">
+                <i class="material-icons prefix">alarm</i>
+                <input name='duration' placeholder="Placeholder" id="duration" type="number">
+                <label for="duration">Duration</label>
+            </div>
+
+        </div>
+
+        <div class="row">
+
+            <div class="input-field col s12">
+                <i class="material-icons prefix">add_location</i>
+                <input name='location' placeholder="Placeholder" id="location" type="text">
+                <label for="first_name">Location</label>
+            </div>
+
+        </div>
+
+        <button type="submit">Submit</button>
+
 
 </form>
 
 {% for thing in TODO %}
-    <div class = "row">
-        {{ thing['task_name'] }}
-        {{ thing['duration'] }}
-        {{ thing['location'] }}
+    <div class = 'row'>
+        {{ thing.task_name }} {{ thing.duration }} {{ thing.location }}
     </div>
     {% endfor %}
 
 <!--
 the code above shows the values you put in the web page after you enter submit
--->
+
 <div class = "row">
     <h3>{{ TODO }}</h3>
 </div>
 
+-->
 <div class " row divider"></div>
 
 

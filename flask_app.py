@@ -1,20 +1,60 @@
-
 # A very simple Flask Hello World app for you to get started with...
 
 from flask import Flask, render_template, request
 # redirect, url_for
 from person import Person
+from pony.orm import Database, Required, Optional,PrimaryKey,select, db_session
 
 app = Flask(__name__)
+db = Database()
+
+class Todo(db.Entity):
+    id = PrimaryKey(int, auto = True)
+    task_name = Required(str)
+    duration = Required (int)
+    location = Optional (str)
+
+db.bind(provider = 'sqlite', filename = 'mydb', create_db = True)
+db.generate_mapping(create_tables =True)
+
+@app.route('/todo2', methods = ['GET', 'POST'])
+@db_session
+def todo2():
+
+    if request.method == 'GET':
+
+        #to modify an object:
+
+        #thing = Todo.get(task_name = 'hiking')
+        #thing.duration = 10000
+
+        new_things = list(select(t for t in Todo))
+
+        return render_template('todo.html',TODO = new_things)
+
+
+    elif request.method == 'POST':
+
+        task_name = request.form.get('task_name')
+        duration = request.form.get('duration')
+        location = request.form.get('location')
+
+        Todo(task_name = task_name, duration = duration, location = location) #create a new row in our table
+
+        new_things = list (select(t for t in Todo)) #list of items that the query object retrieves
+
+        return render_template('todo.html', TODO=new_things)
+
+
+
+
 
 @app.route('/')
 def hello_world():
     return 'Hello from Edona!'
-
 @app.route('/profile')
 def profile():
     return 'This is the profile page.'
-
 """
 @app.route('/profile')
 def profile():
