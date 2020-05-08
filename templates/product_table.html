@@ -1,0 +1,97 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class = 'container'>
+
+  <h3> Products </h3>
+
+  <div class="row">
+      <form>
+        <div class="input-field col s6">
+          <input name="name" placeholder="Placeholder" id="name" type="text">
+          <label for="name">Product Name</label>
+        </div>
+
+        <div class = 'col s6'>
+            <button class = "btn waves-effect waves-light" type="submit">Search
+            <i class = "material-icons right ">search</i>
+            </button>
+        </div>
+
+      </form>
+
+  </div>
+
+  <div class ="row">
+
+      <table>
+          <tr>
+              <th>
+                  ID
+              </th>
+
+              <th>
+                  Name
+              </th>
+
+              <th>
+                  Quantity
+              </th>
+
+              <th>
+                  Price
+              </th>
+          </tr>
+
+
+      </table>
+
+       <div class="row">
+      <form method="POST">
+        <div class="input-field col s4">
+          <input name="name" placeholder="Placeholder" id="name" type="text">
+          <label for="name">Product Name</label>
+        </div>
+
+        <div class="input-field col s4">
+          <input name="quantity" placeholder="Placeholder" id="quantity" type="number">
+          <label for="quantity">Quantity</label>
+        </div>
+
+        <div class="input-field col s4">
+          <input name="price" placeholder="Placeholder" id="price" type="text">
+          <label for="price">Price</label>
+        </div>
+
+        <div class = 'col s4'>
+            <button class = "btn waves-effect waves-light" type="submit">Create
+            <i class = "material-icons right ">send</i>
+            </button>
+        </div>
+
+      </form>
+
+  </div>
+
+</div>
+
+{% for p in PRODUCT %}
+        <div class = 'row'>
+            <div class = 'col s5'>
+                {{ p.name }}
+            </div>
+            <div class = 'col s4'>
+                {{ p.quantity }}
+            </div>
+            <div class = 'col s3'>
+            {{ p.price }}
+            </div>
+        </div>
+            {% endfor %}
+
+
+<div class " row divider"></div>
+
+
+{% endblock %}

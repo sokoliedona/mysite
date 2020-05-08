@@ -1,7 +1,6 @@
 # A very simple Flask Hello World app for you to get started with...
 
-from flask import Flask, render_template, request
-# redirect, url_for
+from flask import Flask, render_template, request,redirect,url_for
 from person import Person
 from pony.orm import Database, Required, Optional,PrimaryKey,select, db_session
 
@@ -14,7 +13,14 @@ class Todo(db.Entity):
     duration = Required (int)
     location = Optional (str)
 
-db.bind(provider = 'sqlite', filename = 'mydb', create_db = True)
+class Product(db.Entity):
+    id = PrimaryKey(int, auto = True)
+    name = Required(str)
+    quantity = Required (int)
+    price = Required (float)
+
+
+db.bind(provider = 'sqlite', filename = 'productdb', create_db = True)
 db.generate_mapping(create_tables =True)
 
 @app.route('/todo2', methods = ['GET', 'POST'])
@@ -25,10 +31,13 @@ def todo2():
 
         #to modify an object:
 
-        #thing = Todo.get(task_name = 'hiking')
+        task = Todo.get(task_name = 'hiking')
         #thing.duration = 10000
 
-        new_things = list(select(t for t in Todo))
+        if task:
+            task.delete()
+
+        new_things = list(select(t for t in Todo)) #list of query object
 
         return render_template('todo.html',TODO = new_things)
 
@@ -143,5 +152,31 @@ def todo():
         return render_template('todo.html', TODO=things)
 
 
+@app.route('/products', methods = ['GET', 'POST'])
+@db_session
+def products():
+    if request.method == 'GET':
 
+        prod = Product.get(name = 'default')
+        if prod:
+            prod.delete()
+        else:
+             name = request.args.get('name')
 
+             if name:
+                 Product(name = name,quantity = 0, price = 0) #create a new row in our table
+             chart = list (select(t for t in Product))
+
+             return render_template('product_table.html', PRODUCT = chart)
+
+    elif request.method == 'POST' :
+        name = request.form.get('name')
+        quantity = request.form.get('quantity')
+        price = request.form.get('price')
+
+        Product(name = name, quantity = quantity, price = price) #create a new row in our table
+
+        chart = list (select(t for t in Product))
+
+        return render_template('product_table.html', PRODUCT = chart)
+        return redirect(url_for('.products'))

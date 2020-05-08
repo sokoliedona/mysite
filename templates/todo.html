@@ -2,6 +2,8 @@
 
 {% block content %}
 
+<div class = 'container'>
+
 <form method = "POST">
 
         <div class="row">
@@ -29,7 +31,7 @@
             <div class="input-field col s12">
                 <i class="material-icons prefix">add_location</i>
                 <input name='location' placeholder="Placeholder" id="location" type="text">
-                <label for="first_name">Location</label>
+                <label for="location">Location</label>
             </div>
 
         </div>
@@ -39,12 +41,14 @@
 
 </form>
 
+
 {% for thing in TODO %}
     <div class = 'row'>
         {{ thing.task_name }} {{ thing.duration }} {{ thing.location }}
     </div>
     {% endfor %}
 
+</div>
 <!--
 the code above shows the values you put in the web page after you enter submit
 
