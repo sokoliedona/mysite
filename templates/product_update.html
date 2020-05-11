@@ -1,0 +1,94 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class = 'container'>
+
+  <h3> Update Product </h3>
+
+  <div class ="row">
+
+      <table>
+
+          <tr>
+
+              <th>
+                  ID
+              </th>
+
+              <th>
+                  Name
+              </th>
+
+              <th>
+                  Quantity
+              </th>
+
+              <th>
+                  Price
+              </th>
+
+          </tr>
+
+              <tr>
+                  <th>
+                      {{ PRODUCT.id }}
+                  </th>
+
+                  <td>
+                      {{ PRODUCT.name }}
+                  </td>
+
+                  <td>
+                      {{ PRODUCT.quantity }}
+                  </td>
+
+                  <td>
+                      {{ PRODUCT.price}}
+                  </td>
+
+                </tr>
+
+      </table>
+
+
+ <div class="row">
+      <form method = 'POST'>
+
+        <div class="input-field col s2">
+          <input name="id" placeholder="Placeholder" id="id" type="number">
+          <label for="id">Update ID</label>
+        </div>
+
+        <div class="input-field col s3">
+          <input name="name" placeholder="Placeholder" id="name" type="text">
+          <label for="name">Update Name</label>
+        </div>
+
+        <div class="input-field col s4">
+          <input name="quantity" placeholder="Placeholder" id="quantity" type="number">
+          <label for="quantity">Update Quantity</label>
+        </div>
+
+        <div class="input-field col s3">
+          <input name="price" placeholder="Placeholder" id="price" type="number">
+          <label for="price">Update Price</label>
+        </div>
+
+        <div class = 'col s4'>
+            <button class = "btn waves-effect waves-light" type="submit">Save
+            <i class = "material-icons right ">save</i>
+            </button>
+        </div>
+
+      </form>
+
+  </div>
+
+</div>
+
+
+<div class " row divider"></div>
+
+
+{% endblock %}

@@ -155,19 +155,15 @@ def todo():
 @app.route('/products', methods = ['GET', 'POST'])
 @db_session
 def products():
-    if request.method == 'GET':
 
-        prod = Product.get(name = 'default')
-        if prod:
-            prod.delete()
-        else:
-             name = request.args.get('name')
+    if request.method == 'GET' :
 
-             if name:
-                 Product(name = name,quantity = 0, price = 0) #create a new row in our table
-             chart = list (select(t for t in Product))
+        #http://edonaaaaa1096.pythonanywhere.com/products
 
-             return render_template('product_table.html', PRODUCT = chart)
+        searchtext = request.args.get('SearchText','')
+        result = list (select(p for p in Product if searchtext in p.name))
+
+        return render_template('product_table.html', PRODUCT = result)
 
     elif request.method == 'POST' :
         name = request.form.get('name')
@@ -176,7 +172,52 @@ def products():
 
         Product(name = name, quantity = quantity, price = price) #create a new row in our table
 
-        chart = list (select(t for t in Product))
+        return redirect(url_for('products'))
 
-        return render_template('product_table.html', PRODUCT = chart)
-        return redirect(url_for('.products'))
+
+@app.route('/delete/<id>', methods = ['GET', 'POST'])
+@db_session
+def delete(id):
+
+    if Product[id] :
+        Product[id].delete()
+    return redirect(url_for('products'))
+
+
+@app.route('/products/<id>', methods = ['GET', 'POST'])
+@db_session
+def update(id):
+
+    if id :
+
+        p = Product[id]
+
+        return render_template('product_update.html',PRODUCT=p)
+
+        if request.method == 'GET' :
+
+            if p:
+
+                return render_template('product_update.html', PRODUCTS = p)
+
+        elif request.method == 'POST' :
+
+            if Product[id]:
+
+                #id = request.form.get('id','')
+                name = request.form.get('name','')
+                quantity = request.form.get('quantity','')
+                price = request.form.get('price','')
+
+                Product[id].set(name=name,quantity=quantity,price=price)
+
+                return redirect(url_for('products'))
+
+            #Product[id].id = id
+            #Product[id].name = name
+            #Product[id].quantity = quantity
+            #Product[id].price = price
+            return 'This product does not exist'
+
+
+
