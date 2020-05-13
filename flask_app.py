@@ -161,7 +161,7 @@ def products():
         #http://edonaaaaa1096.pythonanywhere.com/products
 
         searchtext = request.args.get('SearchText','')
-        result = list (select(p for p in Product if searchtext in p.name))
+        result = list (select(p for p in Product if searchtext.upper() in p.name.upper()))
 
         return render_template('product_table.html', PRODUCT = result)
 
@@ -188,38 +188,23 @@ def delete(id):
 @db_session
 def update(id):
 
-    if id :
+    if request.method == 'POST' :
 
-        p = Product[id]
+        if Product[id] :
 
-        return render_template('product_update.html',PRODUCT=p)
+                name = request.form.get('name')
+                quantity = request.form.get('quantity')
+                price = request.form.get('price')
 
-        if request.method == 'GET' :
-
-            if p:
-
-                return render_template('product_update.html', PRODUCTS = p)
-
-        elif request.method == 'POST' :
-
-            if Product[id]:
-
-                #id = request.form.get('id','')
-                name = request.form.get('name','')
-                quantity = request.form.get('quantity','')
-                price = request.form.get('price','')
-
-                Product[id].set(name=name,quantity=quantity,price=price)
+                Product[id].set(name=name, quantity=quantity, price=price)
 
                 return redirect(url_for('products'))
 
-            #Product[id].id = id
-            #Product[id].name = name
-            #Product[id].quantity = quantity
-            #Product[id].price = price
-            return 'This product does not exist'
+    elif request.method == 'GET' :
 
+        if Product[id] :
 
+            return render_template('product_update.html',PRODUCT = Product[id])
 
 
 if __name__ == '__main__':
